@@ -10,8 +10,8 @@
   --tinta:#3d2b24;
   --tinta-suave:#6e584c;
   --blanco-calido:#fff9f4;
-  --whatsapp:#25d366;
-  --whatsapp-oscuro:#1eb856;
+  --whatsapp:#4e9b5f;
+  --whatsapp-oscuro:#418551;
   --radio:20px;
   --sombra:0 18px 40px rgba(61,43,36,.16);
   --fuente:'Manrope',system-ui,sans-serif;
@@ -42,14 +42,14 @@ h3{font-size:1.25rem}
 .btn{display:inline-flex;align-items:center;gap:9px;font-weight:800;border-radius:999px;padding:13px 26px;font-size:.98rem;transition:transform .25s ease,box-shadow .25s ease,background .25s;cursor:pointer;border:none}
 .btn:hover{transform:translateY(-2px)}
 .btn-lg{padding:16px 32px;font-size:1.05rem}
-.btn-whatsapp{background:var(--whatsapp);color:#fff;box-shadow:0 10px 24px rgba(37,211,102,.35)}
+.btn-whatsapp{background:var(--whatsapp);color:#fff;box-shadow:0 10px 24px rgba(78,155,95,.35)}
 .btn-whatsapp:hover{background:var(--whatsapp-oscuro)}
 .btn-dark{background:var(--marron-oscuro);color:var(--rosa)}
 .btn-dark:hover{background:var(--marron)}
 .btn-ghost{background:transparent;color:var(--marron);border:2px solid var(--marron)}
 .btn-ghost:hover{background:var(--marron);color:var(--rosa)}
 .pulse{animation:pulse 2.2s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.45)}70%{box-shadow:0 0 0 16px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(78,155,95,.45)}70%{box-shadow:0 0 0 16px rgba(78,155,95,0)}100%{box-shadow:0 0 0 0 rgba(78,155,95,0)}}
 
 /* ---------- Header ---------- */
 .site-header{position:fixed;inset:0 0 auto 0;z-index:60;transition:background .3s,box-shadow .3s}
@@ -109,7 +109,8 @@ h3{font-size:1.25rem}
 .mini-card p{color:var(--tinta-suave);font-size:.93rem}
 .service-card{background:var(--coral);border-radius:24px;overflow:hidden;box-shadow:0 12px 30px rgba(61,43,36,.18);display:flex;flex-direction:column;position:relative;transition:transform .3s,box-shadow .3s}
 .service-card:hover{transform:translateY(-8px);box-shadow:var(--sombra)}
-.service-card img{height:230px;width:100%;object-fit:cover;object-position:top}
+.service-icon{width:54px;height:54px;border-radius:50%;background:rgba(39,22,15,.13);display:grid;place-items:center;color:var(--marron-oscuro)}
+.service-icon svg{width:28px;height:28px}
 .service-card.featured{outline:3px solid var(--marron-oscuro);outline-offset:-3px}
 .service-card .tag{position:absolute;top:16px;right:16px;z-index:2;background:var(--marron-oscuro);color:var(--rosa);font-weight:800;font-size:.78rem;padding:6px 14px;border-radius:999px;letter-spacing:.04em}
 .service-body{padding:26px;display:flex;flex-direction:column;gap:12px;flex:1}
@@ -132,13 +133,12 @@ h3{font-size:1.25rem}
 .step h3{margin:10px 0 8px}
 .step p{color:var(--tinta-suave);font-size:.96rem}
 
-/* ---------- Contenido ---------- */
-.content-card{border-radius:22px;position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:300px;padding:24px;box-shadow:0 12px 30px rgba(61,43,36,.16);transition:transform .3s;background:linear-gradient(150deg,#f2d5cc,var(--rosa) 55%,#e3b7ab);overflow:hidden}
-.content-card::before{content:"✦";position:absolute;top:-28px;right:-6px;font-size:9rem;line-height:1;color:rgba(61,43,36,.08);font-family:var(--display)}
-.content-card:hover{transform:translateY(-6px)}
-.content-platform{align-self:flex-start;background:var(--marron-oscuro);color:var(--rosa);font-weight:800;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;padding:7px 14px;border-radius:999px}
-.content-card h3{color:var(--marron);font-size:1.45rem;margin-bottom:4px}
-.content-card p{font-size:.92rem;color:var(--terracota);font-weight:800}
+/* ---------- Contenido / redes ---------- */
+.social-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.social-chip{display:inline-flex;align-items:center;gap:11px;background:var(--blanco-calido);color:var(--marron);font-weight:700;font-size:.95rem;padding:14px 24px;border-radius:999px;box-shadow:0 10px 24px rgba(61,43,36,.13);transition:transform .25s,box-shadow .25s}
+.social-chip:hover{transform:translateY(-3px);box-shadow:var(--sombra)}
+.social-chip svg{color:var(--terracota);flex:none}
+.social-chip strong{color:var(--terracota)}
 
 /* ---------- FAQ ---------- */
 .faq details{background:var(--blanco-calido);border-radius:16px;margin-bottom:12px;box-shadow:0 8px 20px rgba(61,43,36,.09);overflow:hidden}
@@ -164,7 +164,7 @@ h3{font-size:1.25rem}
 .footer-small{font-size:.85rem;opacity:.75;margin-top:6px}
 
 /* ---------- WhatsApp flotante ---------- */
-.wa-float{position:fixed;right:22px;bottom:22px;z-index:80;display:flex;align-items:center;gap:10px;background:var(--whatsapp);color:#fff;font-weight:800;padding:14px 22px 14px 16px;border-radius:999px;box-shadow:0 14px 34px rgba(18,140,66,.45);transition:transform .25s}
+.wa-float{position:fixed;right:22px;bottom:22px;z-index:80;display:flex;align-items:center;gap:10px;background:var(--whatsapp);color:#fff;font-weight:800;padding:14px 22px 14px 16px;border-radius:999px;box-shadow:0 14px 34px rgba(46,110,62,.45);transition:transform .25s}
 .wa-float:hover{transform:scale(1.05)}
 .wa-float-pulse{position:absolute;inset:0;border-radius:999px;background:var(--whatsapp);opacity:.45;z-index:-1;animation:waPulse 1.9s infinite}
 @keyframes waPulse{0%{transform:scale(1);opacity:.45}100%{transform:scale(1.22,1.5);opacity:0}}
