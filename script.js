@@ -24,17 +24,4 @@ toggle.addEventListener('click', () => {
 });
 nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => nav.classList.remove('open')));
 
-// (El movimiento del hero lo da el video de fondo y el efecto Ken Burns de la foto)
-
-// Video de fondo: al poder reproducirse, se retira la foto de respaldo;
-// si el video no carga, se retira el video y queda la foto con efecto Ken Burns
-const video = document.querySelector('.hero-video');
-const fallback = document.querySelector('.hero-fallback');
-if (video) {
-  video.addEventListener('canplay', () => { if (fallback) fallback.remove(); });
-  const source = video.querySelector('source');
-  const fail = () => video.remove();
-  if (source) source.addEventListener('error', fail);
-  video.addEventListener('error', fail);
-  setTimeout(() => { if (video.readyState === 0) video.remove(); }, 4000);
-}
+// (El video de la sección de terapia de pareja se reproduce solo, en silencio y en bucle)
