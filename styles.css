@@ -150,6 +150,46 @@ h3{font-size:1.25rem}
 .foro-pending .btn{margin-top:14px}
 .foro-note{font-size:.86rem;color:var(--tinta-suave);text-align:center;max-width:760px;margin:0 auto}
 
+/* ---------- Página del foro ---------- */
+.page-hero{background:linear-gradient(180deg,var(--rosa),#f3d9d0);padding:150px 0 54px;text-align:center}
+.page-hero h1{font-size:clamp(2rem,4.6vw,3.1rem);color:var(--marron);margin-bottom:16px}
+.page-hero .hero-sub{max-width:680px;margin:0 auto 22px;color:#5a4438;font-size:1.06rem}
+.center{text-align:center}
+.foro-main{padding-top:44px}
+.foro-admin{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
+.foro-admin:empty{display:none}
+.foro-admin-ok{font-weight:800;color:var(--marron-oscuro);font-size:.9rem}
+.foro-mini{background:var(--blanco-calido);border:2px solid rgba(61,43,36,.25);color:var(--marron);font:inherit;font-weight:700;font-size:.85rem;padding:8px 16px;border-radius:999px;cursor:pointer;transition:border-color .2s,transform .2s}
+.foro-mini:hover{border-color:var(--terracota);transform:translateY(-1px)}
+.foro-ok{border-color:var(--whatsapp);color:var(--whatsapp-oscuro)}
+.foro-del{border-color:rgba(160,50,40,.4);color:#a03228}
+.foro-card .foro-del{align-self:flex-start}
+.foro-pendientes{background:var(--blanco-calido);border-radius:20px;padding:26px;box-shadow:0 12px 28px rgba(61,43,36,.12);margin-bottom:26px}
+.foro-pendientes h3{color:var(--marron);margin-bottom:14px}
+.foro-pendientes .foro-comentario{margin-bottom:14px}
+.foro-login{display:flex;gap:10px;flex-wrap:wrap;width:100%}
+.foro-input{font:inherit;font-size:.95rem;color:var(--marron);background:#fff;border:2px solid rgba(61,43,36,.18);border-radius:12px;padding:11px 14px;min-width:0}
+.foro-login .foro-input{flex:1 1 200px}
+.foro-input:focus{outline:none;border-color:var(--terracota)}
+.foro-lista{display:flex;flex-direction:column;gap:14px;margin-bottom:22px}
+.foro-comentario{background:#fdf3ee;border:1px solid rgba(61,43,36,.1);border-radius:14px;padding:16px 18px}
+.foro-comentario.es-admin{background:#eef3ea;border-color:rgba(78,155,95,.35)}
+.foro-comentario-head{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.foro-comentario-head strong{color:var(--marron)}
+.foro-badge{background:var(--salvia);color:#fff;font-size:.7rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:999px}
+.foro-fecha{font-size:.8rem;color:var(--tinta-suave)}
+.foro-texto{color:#503a30;font-size:.96rem;white-space:pre-wrap;word-break:break-word}
+.foro-comentario .foro-mini{margin-top:10px;margin-right:8px}
+.foro-vacio,.foro-cargando{color:var(--tinta-suave);font-size:.95rem}
+.foro-form{border-top:2px dashed rgba(61,43,36,.15);padding-top:20px;display:flex;flex-direction:column;gap:12px}
+.foro-form-titulo{font-family:var(--display);font-size:1.15rem;color:var(--marron);font-weight:600}
+.foro-form textarea.foro-input{resize:vertical;width:100%}
+.foro-form input.foro-input{width:100%}
+.foro-form .btn{align-self:flex-start}
+.foro-form-nota{font-size:.83rem;color:var(--tinta-suave)}
+.foro-form-aviso{font-size:.9rem;font-weight:700;color:var(--whatsapp-oscuro)}
+.foro-form-aviso:empty{display:none}
+
 /* ---------- FAQ ---------- */
 .faq details{background:var(--blanco-calido);border-radius:16px;margin-bottom:12px;box-shadow:0 8px 20px rgba(61,43,36,.09);overflow:hidden}
 .faq summary{cursor:pointer;font-weight:800;padding:19px 22px;color:var(--marron);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px}
