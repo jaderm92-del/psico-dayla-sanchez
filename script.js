@@ -116,6 +116,29 @@ const FORO_TEMAS_LOCALES = [
     } catch (e) { pintarTemas(FORO_TEMAS_LOCALES); }
   }
 
+
+  function cajaServicio(t) {
+    const box = el('div', 'foro-cta');
+    box.appendChild(el('p', 'foro-cta-titulo', '¿Te identificas con este tema?'));
+    box.appendChild(el('p', null, 'Hablarlo entre ustedes es el primer paso; trabajarlo con acompañamiento profesional lo hace mucho más llevadero. En la terapia de pareja online con Dayla Sánchez podrán comprender qué les está pasando, sanar lo que duele y construir una relación más sana, en sesiones de 60 minutos por videollamada.'));
+    const a = el('a', 'btn btn-whatsapp', 'Quiero terapia de pareja');
+    a.target = '_blank'; a.rel = 'noopener';
+    a.href = 'https://wa.me/573163999108?text=' + encodeURIComponent('Hola Dayla, leí el tema del foro «' + t.titulo + '» y quiero información sobre la terapia de pareja.');
+    box.appendChild(a);
+    return box;
+  }
+  function pintarApertura(t) {
+    const texto = (t.contenido && t.contenido.trim()) ? t.contenido : t.intro;
+    if (!texto) return null;
+    const art = el('article', 'foro-apertura');
+    art.appendChild(el('p', 'foro-meta', 'Tema abierto por Dayla Sánchez · Psicóloga'));
+    texto.split(/\n\n+/).forEach((par) => {
+      const limpio = par.trim();
+      if (limpio) art.appendChild(el('p', 'foro-apertura-p', limpio));
+    });
+    return art;
+  }
+
   // ---------- Hilo de un tema ----------
   async function abrirTema(t, card) {
     document.querySelectorAll('.foro-card.active').forEach((c) => c.classList.remove('active'));
@@ -131,15 +154,21 @@ const FORO_TEMAS_LOCALES = [
       a.target = '_blank'; a.rel = 'noopener';
       a.href = 'https://wa.me/573163999108?text=' + encodeURIComponent('Hola Dayla, quiero contar mi situación sobre el tema del foro: ' + t.titulo);
       wrap.appendChild(a);
+      const ap1 = pintarApertura(t);
+      if (ap1) hiloCuerpo.appendChild(ap1);
       hiloCuerpo.appendChild(wrap);
+      hiloCuerpo.appendChild(cajaServicio(t));
       hilo.scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
     }
+    const ap2 = pintarApertura(t);
+    if (ap2) hiloCuerpo.appendChild(ap2);
     const lista = el('div', 'foro-lista');
     lista.appendChild(el('p', 'foro-cargando', 'Cargando la conversación…'));
     hiloCuerpo.appendChild(lista);
     const form = construirFormComentario(t);
     hiloCuerpo.appendChild(form);
+    hiloCuerpo.appendChild(cajaServicio(t));
     await cargarComentarios(t, lista);
     hilo.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
@@ -373,6 +402,47 @@ const FORO_TEMAS_LOCALES = [
       pendientesBox.appendChild(el('p', 'foro-vacio', 'No se pudieron cargar los pendientes.'));
     }
   }
+
+// Si Dayla llega desde el correo de invitación o de recuperación de Supabase,
+  // el enlace trae su token en la URL: se le muestra el formulario para crear
+  // su contraseña de administradora (ninguna contraseña pasa por el chat).
+  (function revisarEnlaceAdmin() {
+    if (!FORO_ACTIVO || !adminBar) return;
+    const hash = new URLSearchParams(location.hash.replace(/^#/, ''));
+    const tipo = hash.get('type');
+    const tk = hash.get('access_token');
+    if ((tipo !== 'invite' && tipo !== 'recovery') || !tk) return;
+    token = tk;
+    adminBar.innerHTML = '';
+    adminBar.appendChild(el('p', 'foro-form-titulo', 'Bienvenida, Dayla: crea tu contraseña del foro'));
+    const form = el('form', 'foro-login');
+    const p1 = document.createElement('input');
+    p1.type = 'password'; p1.required = true; p1.minLength = 8;
+    p1.placeholder = 'Tu nueva contraseña (mínimo 8 caracteres)'; p1.className = 'foro-input';
+    const btn = el('button', 'btn btn-dark', 'Guardar contraseña');
+    btn.type = 'submit';
+    const aviso = el('p', 'foro-form-aviso');
+    form.appendChild(p1); form.appendChild(btn); form.appendChild(aviso);
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      aviso.textContent = 'Guardando…';
+      try {
+        const r = await fetch(FORO_URL + '/auth/v1/user', {
+          method: 'PUT',
+          headers: { 'apikey': FORO_ANON, 'Authorization': 'Bearer ' + tk, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: p1.value })
+        });
+        if (!r.ok) throw new Error('setpass');
+        sessionStorage.setItem('foro_admin_token', tk);
+        history.replaceState(null, '', location.pathname);
+        aviso.textContent = 'Contraseña guardada. Ya estás dentro como administradora.';
+        pintarAdmin(); cargarTemas(); cargarPendientes();
+      } catch (e) {
+        aviso.textContent = 'No se pudo guardar. Pídele a Jader que te reenvíe la invitación.';
+      }
+    });
+    adminBar.appendChild(form);
+  })();
 
   pintarAdmin();
   cargarTemas();
