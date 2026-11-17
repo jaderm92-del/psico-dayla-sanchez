@@ -262,3 +262,5 @@ a.foro-open{text-decoration:none;display:inline-block;text-align:center}
   .reveal{opacity:1;transform:none}
 }
 .foro-apertura-p,.foro-texto,.foro-card p{overflow-wrap:anywhere}
+.footer-acceso{color:inherit;opacity:.45;text-decoration:none}
+.footer-acceso:hover{opacity:.85;text-decoration:underline}

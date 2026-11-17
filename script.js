@@ -312,41 +312,8 @@ const FORO_TEMAS_LOCALES = [
     adminBar.innerHTML = '';
     if (!FORO_ACTIVO) return;
     if (!token) {
-      const btn = el('button', 'foro-mini', 'Acceso de Dayla (administradora)');
-      btn.type = 'button';
-      btn.addEventListener('click', () => {
-        adminBar.innerHTML = '';
-        const form = el('form', 'foro-login');
-        const email = document.createElement('input');
-        email.type = 'email'; email.required = true; email.placeholder = 'Correo de Dayla'; email.className = 'foro-input';
-        const pass = document.createElement('input');
-        pass.type = 'password'; pass.required = true; pass.placeholder = 'Contraseña'; pass.className = 'foro-input';
-        const entrar = el('button', 'btn btn-dark', 'Ingresar');
-        entrar.type = 'submit';
-        const aviso = el('p', 'foro-form-aviso');
-        form.appendChild(email); form.appendChild(pass); form.appendChild(entrar); form.appendChild(aviso);
-        form.addEventListener('submit', async (ev) => {
-          ev.preventDefault();
-          aviso.textContent = 'Ingresando…';
-          try {
-            const r = await fetch(FORO_URL + '/auth/v1/token?grant_type=password', {
-              method: 'POST',
-              headers: { 'apikey': FORO_ANON, 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email: email.value.trim(), password: pass.value })
-            });
-            const data = await r.json();
-            if (!r.ok || !data.access_token) throw new Error('login');
-            token = data.access_token;
-            sessionStorage.setItem('foro_admin_token', token);
-            pintarAdmin(); cargarTemas(); cargarPendientes();
-            if (temaActual) abrirTema(temaActual, null);
-          } catch (e) {
-            aviso.textContent = 'No se pudo ingresar. Revisa el correo y la contraseña.';
-          }
-        });
-        adminBar.appendChild(form);
-      });
-      adminBar.appendChild(btn);
+      // Sin sesión no se muestra ningún botón: el acceso de Dayla vive en un
+      // enlace discreto del pie de página que lleva a foro#acceso.
       return;
     }
     adminBar.appendChild(el('span', 'foro-admin-ok', 'Sesión de administradora activa'));
@@ -478,6 +445,47 @@ const FORO_TEMAS_LOCALES = [
     adminBar.appendChild(form);
   })();
 
+  // Formulario de ingreso de Dayla: solo aparece con el enlace discreto del
+  // pie de página (foro#acceso), nunca como botón visible en el foro.
+  function mostrarLogin() {
+    if (!adminBar || token) return;
+    adminBar.innerHTML = '';
+    adminBar.appendChild(el('p', 'foro-form-titulo', 'Acceso de Dayla'));
+    const form = el('form', 'foro-login');
+    const email = document.createElement('input');
+    email.type = 'email'; email.required = true; email.placeholder = 'Tu correo'; email.className = 'foro-input';
+    const pass = document.createElement('input');
+    pass.type = 'password'; pass.required = true; pass.placeholder = 'Tu contraseña'; pass.className = 'foro-input';
+    const entrar = el('button', 'btn btn-dark', 'Ingresar');
+    entrar.type = 'submit';
+    const aviso = el('p', 'foro-form-aviso');
+    form.appendChild(email); form.appendChild(pass); form.appendChild(entrar); form.appendChild(aviso);
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      aviso.textContent = 'Ingresando…';
+      try {
+        const r = await fetch(FORO_URL + '/auth/v1/token?grant_type=password', {
+          method: 'POST',
+          headers: { 'apikey': FORO_ANON, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email.value.trim(), password: pass.value })
+        });
+        const data = await r.json();
+        if (!r.ok || !data.access_token) throw new Error('login');
+        token = data.access_token;
+        sessionStorage.setItem('foro_admin_token', token);
+        history.replaceState(null, '', location.pathname);
+        pintarAdmin(); cargarTemas(); cargarPendientes();
+        if (temaActual) abrirTema(temaActual, null);
+      } catch (e) {
+        aviso.textContent = 'No se pudo ingresar. Revisa el correo y la contraseña.';
+      }
+    });
+    adminBar.appendChild(form);
+    adminBar.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
   pintarAdmin();
   cargarTemas();
+  if (!token && location.hash === '#acceso') mostrarLogin();
+  window.addEventListener('hashchange', () => { if (!token && location.hash === '#acceso') mostrarLogin(); });
 })();
