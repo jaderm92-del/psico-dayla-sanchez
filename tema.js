@@ -27,7 +27,7 @@
   }
   function esEncabezado(p) {
     const t = p.trim();
-    return t.length <= 110 && !/[.]$/.test(t);
+    return t.length <= 110 && !/[.]$/.test(t) && !/^\d+[.)]/.test(t) && t.indexOf('http') === -1;
   }
   function pintarApertura(t) {
     const texto = (t.contenido && t.contenido.trim()) ? t.contenido : t.intro;
@@ -45,7 +45,7 @@
   function cajaServicio(t) {
     const box = el('div', 'foro-cta');
     box.appendChild(el('p', 'foro-cta-titulo', '¿Te identificas con este tema?'));
-    box.appendChild(el('p', null, 'Hablarlo entre ustedes es el primer paso; trabajarlo con acompañamiento profesional lo hace mucho más llevadero. En la terapia de pareja online con Dayla Sánchez podrán comprender qué les está pasando, sanar lo que duele y construir una relación más sana, en sesiones de 60 minutos por videollamada.'));
+    box.appendChild(el('p', null, 'Hablarlo entre ustedes es el primer paso; trabajarlo con acompañamiento profesional lo hace mucho más llevadero. En mi terapia de pareja online los acompaño a comprender qué les está pasando, sanar lo que duele y construir una relación más sana, en sesiones de 60 minutos por videollamada.'));
     const a = el('a', 'btn btn-whatsapp', 'Quiero terapia de pareja');
     a.target = '_blank'; a.rel = 'noopener';
     a.href = 'https://wa.me/573163999108?text=' + encodeURIComponent('Hola Dayla, leí el tema del foro «' + t.titulo + '» y quiero información sobre la terapia de pareja.');
@@ -146,7 +146,7 @@
     trampa.type = 'text'; trampa.tabIndex = -1; trampa.autocomplete = 'off';
     trampa.style.display = 'none';
     form.appendChild(trampa);
-    form.appendChild(el('p', 'foro-form-nota', token ? 'Tu respuesta se publica de inmediato con tu nombre.' : 'Tu comentario se publica apenas Dayla lo apruebe. No compartas datos personales.'));
+    form.appendChild(el('p', 'foro-form-nota', token ? 'Tu respuesta se publica de inmediato con tu nombre.' : 'Tu comentario se publica cuando se apruebe.'));
     const btn = el('button', 'btn btn-dark', token ? 'Publicar respuesta' : 'Enviar comentario');
     btn.type = 'submit';
     form.appendChild(btn);
@@ -169,7 +169,7 @@
         if (!r.ok) throw new Error('post');
         area.value = '';
         if (inputNombre) inputNombre.value = '';
-        aviso.textContent = token ? 'Respuesta publicada.' : '¡Gracias! Tu comentario quedó en revisión; Dayla lo leerá y lo aprobará pronto.';
+        aviso.textContent = token ? 'Respuesta publicada.' : '¡Gracias! Tu comentario quedó en revisión; lo leeré y lo aprobaré pronto.';
         if (token) cargarComentarios(t, lista);
       } catch (e) {
         aviso.textContent = 'No se pudo enviar. Revisa tu conexión e inténtalo de nuevo.';

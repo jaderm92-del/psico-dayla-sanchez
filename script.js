@@ -62,20 +62,6 @@ const FORO_TEMAS_LOCALES = [
     "intro": "Un «me gusta», un mensaje, un seguidor nuevo… y estalla la discusión. Los celos digitales y la vigilancia en redes son de los conflictos más nuevos de las parejas. Revisamos qué dice la investigación y cómo poner límites sin caer en el control. — Dayla",
     "slug": "celos-redes-sociales-y-desconfianza",
     "imagen": "tema-celos-redes-sociales-y-desconfianza.jpg"
-  },
-  {
-    "id": "local-4",
-    "titulo": "Juntos, pero cada uno en su pantalla",
-    "intro": "Están en la misma cama o en la misma mesa… y cada uno en su celular. Ignorar a la pareja por el teléfono se llama «phubbing» y la ciencia ya midió lo que enfría una relación. — Dayla",
-    "slug": "juntos-pero-cada-uno-en-su-pantalla",
-    "imagen": "tema-juntos-pero-cada-uno-en-su-pantalla.jpg"
-  },
-  {
-    "id": "local-5",
-    "titulo": "Cuando la plata no alcanza, el amor se tensa",
-    "intro": "Las peleas por dinero rara vez son por el dinero. El Modelo de Estrés Familiar de Conger explica la cadena completa: presión económica, malestar, conflicto y una relación que se enfría. — Dayla",
-    "slug": "cuando-la-plata-no-alcanza",
-    "imagen": "tema-cuando-la-plata-no-alcanza.jpg"
   }
 ];
 
@@ -166,7 +152,7 @@ const FORO_TEMAS_LOCALES = [
   function cajaServicio(t) {
     const box = el('div', 'foro-cta');
     box.appendChild(el('p', 'foro-cta-titulo', '¿Te identificas con este tema?'));
-    box.appendChild(el('p', null, 'Hablarlo entre ustedes es el primer paso; trabajarlo con acompañamiento profesional lo hace mucho más llevadero. En la terapia de pareja online con Dayla Sánchez podrán comprender qué les está pasando, sanar lo que duele y construir una relación más sana, en sesiones de 60 minutos por videollamada.'));
+    box.appendChild(el('p', null, 'Hablarlo entre ustedes es el primer paso; trabajarlo con acompañamiento profesional lo hace mucho más llevadero. En mi terapia de pareja online los acompaño a comprender qué les está pasando, sanar lo que duele y construir una relación más sana, en sesiones de 60 minutos por videollamada.'));
     const a = el('a', 'btn btn-whatsapp', 'Quiero terapia de pareja');
     a.target = '_blank'; a.rel = 'noopener';
     a.href = 'https://wa.me/573163999108?text=' + encodeURIComponent('Hola Dayla, leí el tema del foro «' + t.titulo + '» y quiero información sobre la terapia de pareja.');
@@ -181,7 +167,7 @@ const FORO_TEMAS_LOCALES = [
     texto.split(/\n\n+/).forEach((par) => {
       const limpio = par.trim();
       if (!limpio) return;
-      if (limpio.length <= 110 && !/[.]$/.test(limpio)) art.appendChild(el('h3', 'foro-h3', limpio));
+      if (limpio.length <= 110 && !/[.]$/.test(limpio) && !/^\d+[.)]/.test(limpio) && limpio.indexOf('http') === -1) art.appendChild(el('h3', 'foro-h3', limpio));
       else art.appendChild(el('p', 'foro-apertura-p', limpio));
     });
     return art;
@@ -283,7 +269,7 @@ const FORO_TEMAS_LOCALES = [
     trampa.type = 'text'; trampa.tabIndex = -1; trampa.autocomplete = 'off';
     trampa.style.display = 'none'; trampa.className = 'foro-hp';
     form.appendChild(trampa);
-    const nota = el('p', 'foro-form-nota', token ? 'Tu respuesta se publica de inmediato con tu nombre.' : 'Tu comentario se publica apenas Dayla lo apruebe. No compartas datos personales.');
+    const nota = el('p', 'foro-form-nota', token ? 'Tu respuesta se publica de inmediato con tu nombre.' : 'Tu comentario se publica cuando se apruebe.');
     form.appendChild(nota);
     const btn = el('button', 'btn btn-dark', token ? 'Publicar respuesta' : 'Enviar comentario');
     btn.type = 'submit';
@@ -307,7 +293,7 @@ const FORO_TEMAS_LOCALES = [
         if (!r.ok) throw new Error('post');
         area.value = '';
         if (inputNombre) inputNombre.value = '';
-        aviso.textContent = token ? 'Respuesta publicada.' : '¡Gracias! Tu comentario quedó en revisión; Dayla lo leerá y lo aprobará pronto.';
+        aviso.textContent = token ? 'Respuesta publicada.' : '¡Gracias! Tu comentario quedó en revisión; lo leeré y lo aprobaré pronto.';
         if (token) {
           const lista = hiloCuerpo.querySelector('.foro-lista');
           if (lista) cargarComentarios(t, lista);

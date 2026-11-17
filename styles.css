@@ -261,3 +261,4 @@ a.foro-open{text-decoration:none;display:inline-block;text-align:center}
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
   .reveal{opacity:1;transform:none}
 }
+.foro-apertura-p,.foro-texto,.foro-card p{overflow-wrap:anywhere}
